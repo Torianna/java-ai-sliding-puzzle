@@ -1,12 +1,13 @@
 package pl.edu.zut.wdsi;
 
 import sac.graph.GraphState;
+import sac.graph.GraphStateImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Puzzle {
+public class Puzzle extends GraphStateImpl {
     private static final int n=3;
     private byte[][] board;
     private int x, y;
@@ -47,9 +48,15 @@ public class Puzzle {
         return Arrays.hashCode(linear);
     }
 
+    @Override
     public List<GraphState> generateChildren() {
         List<GraphState> list = new ArrayList<>();
         return new ArrayList<>();
+    }
+
+    @Override
+    public boolean isSolution() {
+        return false;
     }
 
     void Shuffle(Puzzle puzzle, int steps) {
