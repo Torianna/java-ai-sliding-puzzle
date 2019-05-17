@@ -1,5 +1,6 @@
-package pl.edu.zut.wdsi;
+package pl.edu.zut.wdsi.hfunctions;
 
+import pl.edu.zut.wdsi.puzzle.Puzzle;
 import sac.State;
 import sac.StateFunction;
 

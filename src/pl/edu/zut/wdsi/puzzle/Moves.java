@@ -1,4 +1,4 @@
-package pl.edu.zut.wdsi;
+package pl.edu.zut.wdsi.puzzle;
 
 public enum Moves {
     GOUP,

@@ -1,17 +1,17 @@
-package pl.edu.zut.wdsi;
+package pl.edu.zut.wdsi.puzzle;
 
 public class ZeroPosition {
     private int x = 0;
     private int y = 0;
 
-    public ZeroPosition(){}
+    ZeroPosition(){}
 
-    public ZeroPosition(int x, int y) {
+    ZeroPosition(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public ZeroPosition(ZeroPosition zeroPositionObj) {
+    ZeroPosition(ZeroPosition zeroPositionObj) {
         x = zeroPositionObj.x;
         y = zeroPositionObj.y;
     }

@@ -1,6 +1,7 @@
-package pl.edu.zut.wdsi;
+package pl.edu.zut.wdsi.puzzle;
 
-import sac.StateImpl;
+import pl.edu.zut.wdsi.hfunctions.HManhattan;
+import pl.edu.zut.wdsi.hfunctions.HMisplacedTiles;
 import sac.graph.AStar;
 import sac.graph.GraphSearchAlgorithm;
 import sac.graph.GraphState;
