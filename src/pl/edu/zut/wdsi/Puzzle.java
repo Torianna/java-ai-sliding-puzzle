@@ -1,5 +1,8 @@
 package pl.edu.zut.wdsi;
 
+import sac.StateImpl;
+import sac.graph.AStar;
+import sac.graph.GraphSearchAlgorithm;
 import sac.graph.GraphState;
 import sac.graph.GraphStateImpl;
 
@@ -56,12 +59,21 @@ public class Puzzle extends GraphStateImpl {
     @Override
     public List<GraphState> generateChildren() {
         List<GraphState> list = new ArrayList<>();
-        return new ArrayList<>();
+        for (int i = 0; i < 4; ++i) {
+            Puzzle child = new Puzzle(this);
+            Moves move = Moves.values()[i];
+            if (child.move(move)) {
+                child.setMoveName(move.toString());
+                list.add(child);
+            }
+        }
+
+        return list;
     }
 
     @Override
     public boolean isSolution() {
-        return false;
+        return misplacedPuzzlePiece == 0 && distance == 0;
     }
 
     private byte[][] makeAndFillTheBoard() {
@@ -176,4 +188,64 @@ public class Puzzle extends GraphStateImpl {
         refreshDistance();
     }
 
+    public int getMisplacedPuzzlePiece() {
+        return misplacedPuzzlePiece;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    private static void provideTests (Puzzle puzzle, int tests, int[] testSeeds, String hFunction) {
+        Random random = new Random();
+        GraphSearchAlgorithm alg = new AStar(puzzle);
+
+        int time = 0;
+        int close = 0;
+        int open = 0;
+        int pathLength = 0;
+
+        for (int i = 0; i < tests; ++i) {
+            testSeeds[i] = random.nextInt();
+            puzzle.shuffle(1000, testSeeds[i]);
+
+            alg.execute();
+
+            for (GraphState solution : alg.getSolutions())
+                pathLength += solution.getMovesAlongPath().size();
+
+            time += alg.getDurationTime();
+            close += alg.getClosedStatesCount();
+            open += alg.getOpenSet().size();
+        }
+        printResults(time, tests, close, open, pathLength, hFunction);
+    }
+
+    private static void printResults (int time, int tests, int close, int open, int pathLength, String hFunction) {
+
+        System.out.println("---------------------------"+hFunction+"---------------------------");
+        System.out.print("Medium time: ");
+        System.out.println((double)time/tests);
+        System.out.print("Medium close set: ");
+        System.out.println((double)close/tests);
+        System.out.print("Medium open set: ");
+        System.out.println((double)open/tests);
+        System.out.print("Medium path length: ");
+        System.out.println((double)pathLength/tests);
+    }
+
+    public static void main(String... args) {
+
+        int tests = 100;
+        int[] testSeeds = new int[tests];
+
+        Puzzle puzzle = new Puzzle();
+        setHFunction(new HManhattan());
+        provideTests(puzzle, tests, testSeeds, "Manhattan");
+
+        setHFunction(new HMisplacedTiles());
+        provideTests(puzzle, tests, testSeeds, "MisplacedTiles");
+
+
+    }
 }
