@@ -1,6 +1,6 @@
 # Puzzle
 This is the project for subject "Introduction to Artificial Intelligence" for West Pomeranian Technology University
-Version 1.0
+- Version 1.0
 
 # Developers
 - Oleksandr Tilnyi : https://github.com/alex-tifox
